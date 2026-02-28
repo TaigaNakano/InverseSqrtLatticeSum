@@ -9,6 +9,9 @@
 #endif
 
 NOOPT
+/**
+ * @brief Directly evaluates the truncated lattice sum with Kahan compensated summation.
+ */
 int InverseSqrtLatticeSum::partialsum_with_kahans_summation(
     double* result,
     int* eval_count,
@@ -60,6 +63,9 @@ int InverseSqrtLatticeSum::partialsum_with_kahans_summation(
     return ISLS_COMPUTATION_REACHED_MAXEVAL;
 }
 
+/**
+ * @brief Evaluates the transformed integral form derived from Poisson summation.
+ */
 int InverseSqrtLatticeSum::poissons_summation_with_integral(
     double* result,
     int* eval_count,
@@ -88,7 +94,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
     double r = InverseSqrtLatticeSum::X_SWITCH_FOR_INVEXPM1 / m;
     double T = (r <= 1.0) ? 0.0 : std::acosh(r);
 
-    // 積分区間が実質ゼロなら pref のみ
+    /** @brief If the integration interval is effectively zero, return only the prefactor term. */
     if (T < InverseSqrtLatticeSum::DEFAULT_EPS)
     {
         *eval_count = 0;
@@ -96,7 +102,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         return ISLS_COMPUTATION_NO_ITERATION_NEEDED;
     }
 
-    // 端点評価に最低2回必要
+    /** @brief At least two evaluations are required for endpoint sampling. */
     if (max_evaluation >= 0 && max_evaluation < 2)
     {
         *eval_count = 0;
@@ -116,13 +122,13 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         n <<= 1;
         int half = n >> 1;
 
-        // max_evaluation を厳密に超えない
+        /** @brief Never exceed max_evaluation strictly. */
         if (max_evaluation >= 0 && _eval_count + half > max_evaluation)
             break;
 
         double h = T / n;
 
-        // 内点列 t = (2j-1)h
+        /** @brief Midpoint sequence: t = (2j-1)h. */
         double delta2h = 2.0 * h;
         double coshDelta = std::cosh(delta2h);
         double sinhDelta = std::sinh(delta2h);
@@ -135,7 +141,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         {
             sum_mid += integrant_from_cosh(cosh_t, alpha, beta);
 
-            // t <- t + 2h
+            /** @brief Increment t by 2h using hyperbolic-angle addition identities. */
             double newCosh = cosh_t * coshDelta + sinh_t * sinhDelta;
             double newSinh = sinh_t * coshDelta + cosh_t * sinhDelta;
             cosh_t = newCosh;
@@ -164,6 +170,9 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
     return ISLS_COMPUTATION_REACHED_MAXEVAL;
 }
 
+/**
+ * @brief Dispatches computation to the selected method implementation.
+ */
 int InverseSqrtLatticeSum::get_value(
     double* result,
     int* eval_count,
