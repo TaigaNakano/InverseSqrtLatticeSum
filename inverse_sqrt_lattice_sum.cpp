@@ -110,8 +110,8 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         return ISLS_COMPUTATION_REACHED_MAXEVAL;
     }
 
-    double g0 = integrant_from_cosh(1.0, alpha, beta);          // cosh(0)=1
-    double gT = integrant_from_cosh(std::cosh(T), alpha, beta); // cosh(T)
+    double g0 = integrand_from_cosh(1.0, alpha, beta);          // cosh(0)=1
+    double gT = integrand_from_cosh(std::cosh(T), alpha, beta); // cosh(T)
     int eval_count_local = 2;
 
     double Tk = 0.5 * (g0 + gT) * T;
@@ -139,7 +139,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         double sum_mid = 0.0;
         for (int j = 0; j < half; j++)
         {
-            sum_mid += integrant_from_cosh(cosh_t, alpha, beta);
+            sum_mid += integrand_from_cosh(cosh_t, alpha, beta);
 
             /** @brief Increment t by 2h using hyperbolic-angle addition identities. */
             double newCosh = cosh_t * coshDelta + sinh_t * sinhDelta;

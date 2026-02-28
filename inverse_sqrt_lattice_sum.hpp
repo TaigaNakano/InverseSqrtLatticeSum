@@ -91,7 +91,7 @@ class InverseSqrtLatticeSum
          * @param beta Second scaled parameter.
          * @return Integrand value at t.
          */
-        static inline double integrant_from_cosh(double coshT, double alpha, double beta)
+        static inline double integrand_from_cosh(double coshT, double alpha, double beta)
         {
             return inv_expm1_pos(alpha * coshT) - inv_expm1_pos(beta * coshT);
         }
