@@ -24,10 +24,10 @@ You can also include `inverse_sqrt_lattice_sum.hpp` and call `InverseSqrtLattice
 - Accuracy/termination are controlled by `atol`, `rtol`, and `max_evaluation`.
 
 ## 3. Theory
-**Key acceleration idea (high level).**  
+**Key acceleration idea**  
 Instead of summing many slowly decaying terms directly, separate the problem into a closed-form main part plus a rapidly decaying remainder. The remainder is then integrated with a quadrature that converges much faster than naive term-by-term summation.
 
-**Details (for experts).**  
+**Details**  
 The difference cancels the leading \(1/n\) asymptotic term, yielding an effective \(O(n^{-3})\) tail, but finite-precision accumulation is still sensitive to cancellation. The conventional path therefore uses Kahan compensation. The fast path applies a Poisson-summation reformulation:
 \[
 S(a,b)=\tfrac12\log\frac{b}{a}\;\pm\;\tfrac12\left(\frac{1}{\sqrt a}-\frac{1}{\sqrt b}\right)+2\int_0^T\left[\frac{1}{e^{\alpha\cosh t}-1}-\frac{1}{e^{\beta\cosh t}-1}\right]dt,
