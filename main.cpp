@@ -6,7 +6,7 @@ int main()
 {
     std::cout << std::scientific;
     std::cout << std::setprecision(15);
-    int eval_count = 0.0;
+    int eval_count = 0;
     double value = 0.0;
 
     double a = 0.0, b = 0.0;
@@ -23,7 +23,7 @@ int main()
     std::cout << "Please input computation method(0: Poisson's sum, 1: Direct computation)" << std::endl;
     std::cout << "> ";
     std::cin >> method;
-    std::cout << "Please input index start from zero or one(1: One, other wise 0)" << std::endl;
+    std::cout << "Please input index start from zero or one (1: one, otherwise 0)" << std::endl;
     std::cout << "> ";
     std::cin >> use_input_start_from_one;
     std::cout << "Please input absolute tolerance" << std::endl;
@@ -43,19 +43,19 @@ int main()
     switch (result)
     {
         case ISLS_COMPUTATION_INVALID_INPUT:
-            std::cout << "Reuslt: Invalid input (a, b) = (" << a << ", " << b << ") " << std::endl;
+            std::cout << "Result: Invalid input (a, b) = (" << a << ", " << b << ") " << std::endl;
             break;
         
         case ISLS_COMPUTATION_CONVERGED:
-            std::cout << " -Reuslt: Computation was converged" << std::endl;
+            std::cout << " -Result: Computation was converged" << std::endl;
             break;
 
         case ISLS_COMPUTATION_REACHED_MAXEVAL:
-            std::cout << " -Reuslt: Computation reached max iteration" << std::endl;
+            std::cout << " -Result: Computation reached max iteration" << std::endl;
             break;
 
         case ISLS_COMPUTATION_NO_ITERATION_NEEDED:
-            std::cout << " -Reuslt: No iteration needed" << std::endl;
+            std::cout << " -Result: No iteration needed" << std::endl;
             break;
 
         default:
