@@ -47,9 +47,10 @@ behavior in lattice sums. [Denlinger]
 Regularized lattice sums (zeta/theta/Epstein-type objects) provide a mathematical umbrella for
 many “sum over lattice points with regularization” constructions. [Buchheit]
 
+<!---
 As a concrete applied example where infinite image arrays lead to correction factors (and where
 careful evaluation of series matters), four-point probe sheet resistivity formulas are a classic
-reference. [Smits]
+reference. [Smits]-->
 
 This repository focuses on the numerical evaluation of $`S(a,b)`$ itself.
 
@@ -123,6 +124,8 @@ Implementation notes:
   Computation and properties of the Epstein zeta function ..., arXiv:2412.16317.  
   https://arxiv.org/abs/2412.16317
 
+<!--
 - [Smits] F. M. Smits,  
   Measurement of Sheet Resistivities with the Four-Point Probe (open PDF).  
   https://www.four-point-probes.com/smits.pdf
+  -->
