@@ -34,9 +34,28 @@ You can include `inverse_sqrt_lattice_sum.hpp` and call `InverseSqrtLatticeSum::
 - Inputs must satisfy $`a>0`$, $`b>0`$.
 - Accuracy/termination are controlled by `atol`, `rtol`, and `max_evaluation`.
 
-## 3. Theory & numerical strategy
+## 3. Motivation
 
-### 3.1 Why acceleration is needed
+This regularized inverse-sqrt lattice sum is a compact representative of a broader class of
+(i) image-series / periodic Green-function constructions and (ii) regularized lattice sums
+where naive summation is slow or unstable, motivating transform-based acceleration.
+
+Fast evaluation of lattice sums is a standard theme in periodic scattering and related problems;
+see Denlinger et al. for an open-access example of fast summation methods and regime-sensitive
+behavior in lattice sums. [Denlinger]
+
+Regularized lattice sums (zeta/theta/Epstein-type objects) provide a mathematical umbrella for
+many “sum over lattice points with regularization” constructions. [Buchheit]
+
+As a concrete applied example where infinite image arrays lead to correction factors (and where
+careful evaluation of series matters), four-point probe sheet resistivity formulas are a classic
+reference. [Smits]
+
+This repository focuses on the numerical evaluation of $`S(a,b)`$ itself.
+
+## 4. Theory & numerical strategy
+
+### 4.1 Why acceleration is needed
 
 Even though the difference cancels the leading $`O(1/n)`$ behavior and yields an $`O(n^{-3})`$ tail,
 plain partial sums can still be slow and numerically delicate:
@@ -47,7 +66,7 @@ plain partial sums can still be slow and numerically delicate:
 
 The conventional path therefore uses compensated summation to reduce roundoff accumulation.
 
-### 3.2 Poisson summation viewpoint (key idea)
+### 4.2 Poisson summation viewpoint (key idea)
 
 A central observation is that $`S(a,b)`$ is a difference of two lattice sums of a smooth kernel.
 Poisson summation relates sums over integers to sums over Fourier modes:
@@ -65,7 +84,7 @@ rearrangement to make the Poisson approach numerically well behaved.)
 In this project, the “FAST” method uses a Poisson-summation-based reformulation that splits
 $`S(a,b)`$ into (i) a closed-form main part and (ii) a rapidly decaying remainder.
 
-### 3.3 The accelerated representation used here
+### 4.3 The accelerated representation used here
 
 The fast path uses the Poisson-summation reformulation (as implemented in this repo):
 
@@ -86,26 +105,8 @@ Implementation notes:
 |\Delta|\le \mathrm{rtol}\,|S_{\mathrm{old}}|+\mathrm{atol}.
 ```
 
-### 3.4 Background & where this sum shows up (motivation)
 
-This regularized inverse-sqrt lattice sum is a compact representative of a broader class of
-(i) image-series / periodic Green-function constructions and (ii) regularized lattice sums
-where naive summation is slow or unstable, motivating transform-based acceleration.
-
-Fast evaluation of lattice sums is a standard theme in periodic scattering and related problems;
-see Denlinger et al. for an open-access example of fast summation methods and regime-sensitive
-behavior in lattice sums. [Denlinger]
-
-Regularized lattice sums (zeta/theta/Epstein-type objects) provide a mathematical umbrella for
-many “sum over lattice points with regularization” constructions. [Buchheit]
-
-As a concrete applied example where infinite image arrays lead to correction factors (and where
-careful evaluation of series matters), four-point probe sheet resistivity formulas are a classic
-reference. [Smits]
-
-This repository focuses on the numerical evaluation of $`S(a,b)`$ itself.
-
-## 4. References
+## 5. References
 
 - [Poisson summation] Poisson summation formula (overview and standard assumptions).  
   https://en.wikipedia.org/wiki/Poisson_summation_formula
