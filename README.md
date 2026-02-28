@@ -79,8 +79,8 @@ Poisson summation relates sums over integers to sums over Fourier modes:
 So if the Fourier transform $`\widehat{f}`$ decays rapidly, the transformed series converges quickly.
 Intuitively: more smoothness in the original function means faster decay in Fourier space, which
 is precisely what makes the transformed representation efficient.
-(For Schwartz-class functions this is the cleanest; for other kernels one uses regularization /
-rearrangement to make the Poisson approach numerically well behaved.)
+<!--(For Schwartz-class functions this is the cleanest; for other kernels one uses regularization /
+rearrangement to make the Poisson approach numerically well behaved.)-->
 
 In this project, the “FAST” method uses a Poisson-summation-based reformulation that splits
 $`S(a,b)`$ into (i) a closed-form main part and (ii) a rapidly decaying remainder.
