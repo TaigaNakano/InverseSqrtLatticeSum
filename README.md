@@ -105,7 +105,7 @@ reference. [Smits]
 
 This repository focuses on the numerical evaluation of $`S(a,b)`$ itself.
 
-## 4. References (open access)
+## 4. References
 
 - [Poisson summation] Poisson summation formula (overview and standard assumptions).  
   https://en.wikipedia.org/wiki/Poisson_summation_formula
