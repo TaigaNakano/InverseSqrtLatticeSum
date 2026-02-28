@@ -30,10 +30,10 @@ int InverseSqrtLatticeSum::partialsum_with_kahans_summation(
 
     int k = start_from_one ? 1 : 0;
 
-    int _eval_count = 0;
+    int eval_count_local = 0;
     double old_s, nn, y, t, delta;
 
-    while (max_evaluation < 0 || _eval_count < max_evaluation)
+    while (max_evaluation < 0 || eval_count_local < max_evaluation)
     {
         old_s = s;
 
@@ -45,12 +45,12 @@ int InverseSqrtLatticeSum::partialsum_with_kahans_summation(
         c = (t - s) - y;
         s = t;
 
-        _eval_count++;
+        eval_count_local++;
 
         delta = s - old_s;
         if (std::fabs(delta) <= rtol * std::fabs(old_s) + atol)
         {
-            *eval_count = _eval_count;
+            *eval_count = eval_count_local;
             *result = s;
             return ISLS_COMPUTATION_CONVERGED;
         }
@@ -58,7 +58,7 @@ int InverseSqrtLatticeSum::partialsum_with_kahans_summation(
         k++;
     }
 
-    *eval_count = _eval_count;
+    *eval_count = eval_count_local;
     *result = s;
     return ISLS_COMPUTATION_REACHED_MAXEVAL;
 }
@@ -112,7 +112,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
 
     double g0 = integrant_from_cosh(1.0, alpha, beta);          // cosh(0)=1
     double gT = integrant_from_cosh(std::cosh(T), alpha, beta); // cosh(T)
-    int _eval_count = 2;
+    int eval_count_local = 2;
 
     double Tk = 0.5 * (g0 + gT) * T;
     int n = 1;
@@ -123,7 +123,7 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
         int half = n >> 1;
 
         /** @brief Never exceed max_evaluation strictly. */
-        if (max_evaluation >= 0 && _eval_count + half > max_evaluation)
+        if (max_evaluation >= 0 && eval_count_local + half > max_evaluation)
             break;
 
         double h = T / n;
@@ -148,24 +148,24 @@ int InverseSqrtLatticeSum::poissons_summation_with_integral(
             sinh_t = newSinh;
         }
 
-        _eval_count += half;
+        eval_count_local += half;
 
         double Tk2 = 0.5 * Tk + h * sum_mid;
         double delta = Tk2 - Tk;
 
         if (std::fabs(delta) <= rtol * std::fabs(Tk) + atol)
         {
-            *eval_count = _eval_count;
+            *eval_count = eval_count_local;
             *result = pref + 2.0 * Tk2;
             return ISLS_COMPUTATION_CONVERGED;
         }
 
         Tk = Tk2;
 
-        if (max_evaluation >= 0 && _eval_count == max_evaluation) break;
+        if (max_evaluation >= 0 && eval_count_local == max_evaluation) break;
     }
 
-    *eval_count = _eval_count;
+    *eval_count = eval_count_local;
     *result = pref + 2.0 * Tk;
     return ISLS_COMPUTATION_REACHED_MAXEVAL;
 }
